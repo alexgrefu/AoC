@@ -28,7 +28,7 @@ func (p passport) isValid() bool {
 					return false
 				}
 			case "hgt":
-				r, _ := regexp.Compile(`\d\d\d?(cm|in)`)
+				r, _ := regexp.Compile(`^\d\d\d?(cm|in)$`)
 				if r.MatchString(v) {
 					if strings.Contains(v, "cm") {
 						if n, err := strconv.Atoi(v[:3]); err == nil {
@@ -56,7 +56,7 @@ func (p passport) isValid() bool {
 				}
 			case "hcl":
 				// regex to match strings like #123abf
-				if !isRegexValid(v, "#[0-9a-f]{6}") {
+				if !isRegexValid(v, "^#[0-9a-f]{6}$") {
 					return false
 				}
 			case "ecl":
@@ -64,7 +64,7 @@ func (p passport) isValid() bool {
 					return false
 				}
 			case "pid": 
-				if !isRegexValid(v, `\d{9}`) {
+				if !isRegexValid(v, `^\d{9}$`) {
 					return false
 				}
 		}
@@ -101,14 +101,14 @@ func main() {
 		if len(p) == 8 {
 			if p.isValid() {
 				valid++
-				fmt.Printf("%#v\n", p)
+				fmt.Printf("%#v [%d]\n", p, valid)
 			}
 		
 		}
 		if _, found := p["cid"]; !found && len(p) == 7 {
 			if p.isValid() {
 				valid++	
-				fmt.Printf("%#v\n", p)	
+				fmt.Printf("%#v [%d]\n", p, valid)	
 			}
 			
 		}
