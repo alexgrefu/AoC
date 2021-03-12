@@ -10,11 +10,11 @@ import (
 
 type slope struct {
 	right int
-	down int
+	down  int
 }
 
 func main() {
-	slopes := [] slope {
+	slopes := []slope{
 		{right: 1, down: 1},
 		{right: 3, down: 1},
 		{right: 5, down: 1},
@@ -49,7 +49,9 @@ func generateTreemap(slopes []slope, fileName string) [][]bool {
 	// large enough to fit all slopes
 	maxRight := 0
 	for _, s := range slopes {
-		if s.right > maxRight { maxRight = s.right }
+		if s.right > maxRight {
+			maxRight = s.right
+		}
 	}
 
 	// the vertical slots are the number of lines from the input file
@@ -64,7 +66,7 @@ func generateTreemap(slopes []slope, fileName string) [][]bool {
 	// then the vertical count
 	multiplicationFactor := ((verticalSlots * maxRight) / horizontalSlots) + 1 // we add one to account for division rounding
 
-	treeMap := make ([][]bool, verticalSlots)
+	treeMap := make([][]bool, verticalSlots)
 	horizontalCap := len(strings.Repeat(lines[0], multiplicationFactor))
 	for i := range treeMap {
 		treeMap[i] = make([]bool, horizontalCap)
@@ -94,7 +96,9 @@ func countTrees(treeMap [][]bool, s slope) int {
 	trees := 0
 	for vIndex := s.down; vIndex < len(treeMap); vIndex += s.down {
 		hIndex += s.right
-		if treeMap[vIndex][hIndex] { trees++ }
+		if treeMap[vIndex][hIndex] {
+			trees++
+		}
 	}
 
 	return trees
